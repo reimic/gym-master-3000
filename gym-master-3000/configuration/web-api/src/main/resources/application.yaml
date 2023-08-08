@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: "jdbc:h2:mem:gymmaster3000db"
+    driver-class-name: "org.h2.Driver"
+    username: "sa"
+    password:
+  h2:
+    console:
+      enabled: true # app will be available on http://localhost:8080/h2-console
+  jpa:
+    hibernate:
+      spring.jpa.database-platform: 'org.hibernate.dialect.H2Dialect'
+      ddl-auto: update
+      show-sql: true
+      format_sql: true
+      use_sql_comments: true
