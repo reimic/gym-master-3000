@@ -15,11 +15,11 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class FindMemberUseCase {
 
-    private final FindMemberPort findMemberPort;
+    private final FindMemberPort port;
 
     public MemberView apply(@Valid GetMemberQuery query) {
-        var member = findMemberPort.findBy(query.memberId)
-                                   .orElseThrow(() -> new MemberNotFoundException(query.memberId.value()));
+        var member = port.findBy(query.memberId)
+                         .orElseThrow(() -> new MemberNotFoundException(query.memberId.value()));
         return MemberView.from(member);
     }
 

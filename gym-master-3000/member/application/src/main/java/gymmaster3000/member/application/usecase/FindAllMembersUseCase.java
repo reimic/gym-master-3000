@@ -12,13 +12,13 @@ import java.util.List;
 
 public class FindAllMembersUseCase {
 
-    private final FindAllMembersPort findAllMembersPort;
+    private final FindAllMembersPort port;
 
     public List<MemberView> apply(GetAllMembersQuery query) {
-        return findAllMembersPort.findAll()
-                                 .stream()
-                                 .map(MemberView::from)
-                                 .toList();
+        return port.findAll()
+                   .stream()
+                   .map(MemberView::from)
+                   .toList();
     }
 
     public record GetAllMembersQuery() {

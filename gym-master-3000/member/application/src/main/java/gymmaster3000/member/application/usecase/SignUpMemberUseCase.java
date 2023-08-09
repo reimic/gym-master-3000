@@ -15,18 +15,18 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Validated
-public class SignupMemberUseCase {
+public class SignUpMemberUseCase {
 
-    private final SaveMemberPort saveMemberPort;
+    private final SaveMemberPort port;
 
     @Transactional
-    public UUID apply(@Valid SignupMemberUseCase.SignupMemberCommand command) {
+    public UUID apply(@Valid SignUpMemberCommand command) {
         var member = Member.create()
                            .withNewEmail(command.memberEmail);
-        return saveMemberPort.save(member);
+        return port.save(member);
     }
 
-    public record SignupMemberCommand(@NotNull MemberEmail memberEmail) {
+    public record SignUpMemberCommand(@NotNull MemberEmail memberEmail) {
 
     }
 
