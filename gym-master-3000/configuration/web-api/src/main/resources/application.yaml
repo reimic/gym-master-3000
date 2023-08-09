@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: java-serializer
   datasource:
     url: "jdbc:h2:mem:gymmaster3000db"
     driver-class-name: "org.h2.Driver"
