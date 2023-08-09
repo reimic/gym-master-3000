@@ -4,8 +4,9 @@ import gymmaster3000.member.domain.valueobject.MemberEmail;
 import jakarta.persistence.AttributeConverter;
 
 public class MemberEmailConverter implements AttributeConverter<MemberEmail, String> {
+
     @Override
-    public String convertToDatabaseColumn(MemberEmail attribute) {
+    public String convertToDatabaseColumn(final MemberEmail attribute) {
         if (attribute == null) {
             return null;
         }
@@ -13,7 +14,7 @@ public class MemberEmailConverter implements AttributeConverter<MemberEmail, Str
     }
 
     @Override
-    public MemberEmail convertToEntityAttribute(String dbData) {
+    public MemberEmail convertToEntityAttribute(final String dbData) {
         return new MemberEmail(dbData);
     }
 

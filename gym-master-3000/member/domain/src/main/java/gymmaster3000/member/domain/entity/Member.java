@@ -8,7 +8,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.UUID;
 
@@ -31,8 +34,8 @@ public class Member {
         return member;
     }
 
-    public Member withNewEmail(@NonNull MemberEmail memberEmail){
-        if(!memberEmail.equals(this.memberEmail)){
+    public Member withNewEmail(@NonNull MemberEmail memberEmail) {
+        if (!memberEmail.equals(this.memberEmail)) {
             return new Member(memberId, memberEmail);
         } else {
             return this;
