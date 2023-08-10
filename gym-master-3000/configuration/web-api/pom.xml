@@ -58,11 +58,11 @@
 
         <!-- locker -->
 
-        <!--        <dependency>-->
-        <!--            <groupId>acmecorp.gymmaster3000.locker</groupId>-->
-        <!--            <artifactId>adapter-in-web</artifactId>-->
-        <!--            <version>${revision}</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>acmecorp.gymmaster3000.locker</groupId>
+            <artifactId>adapter-in-web</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <dependency>
             <groupId>acmecorp.gymmaster3000.locker</groupId>
             <artifactId>adapter-out-db</artifactId>

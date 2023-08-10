@@ -1,4 +1,4 @@
-package gymmaster3000.member.application.port;
+package gymmaster3000.locker.application.port;
 
 import gymmaster3000.locker.domain.entity.Locker;
 import gymmaster3000.locker.domain.valueobject.LockerId;

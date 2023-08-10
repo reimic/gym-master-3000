@@ -1,9 +1,9 @@
-package gymmaster3000.member.application.usecase;
+package gymmaster3000.locker.application.usecase;
 
+import gymmaster3000.locker.application.port.FindLockerPort;
 import gymmaster3000.locker.domain.entity.Locker;
 import gymmaster3000.locker.domain.entity.LockerNotFoundException;
 import gymmaster3000.locker.domain.valueobject.LockerId;
-import gymmaster3000.member.application.port.FindLockerPort;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

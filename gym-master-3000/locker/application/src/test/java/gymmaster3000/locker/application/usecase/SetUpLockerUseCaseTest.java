@@ -1,9 +1,9 @@
-package gymmaster3000.member.application.usecase;
+package gymmaster3000.locker.application.usecase;
 
 import gymmaster3000.locker.domain.entity.Locker;
 import gymmaster3000.locker.domain.event.IncomingEvent;
 import gymmaster3000.locker.domain.event.SetupLockerEvent;
-import gymmaster3000.member.application.port.SaveLockerPort;
+import gymmaster3000.locker.application.port.SaveLockerPort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.UUID;
 
-import static gymmaster3000.member.application.usecase.SetUpLockerUseCase.SetUpLockerCommand;
+import static gymmaster3000.locker.application.usecase.SetUpLockerUseCase.SetUpLockerCommand;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;

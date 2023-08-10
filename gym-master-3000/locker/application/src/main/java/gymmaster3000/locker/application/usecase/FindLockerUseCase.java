@@ -1,13 +1,14 @@
-package gymmaster3000.member.application.usecase;
+package gymmaster3000.locker.application.usecase;
 
 import gymmaster3000.locker.domain.entity.LockerNotFoundException;
 import gymmaster3000.locker.domain.entity.LockerView;
 import gymmaster3000.locker.domain.valueobject.LockerId;
-import gymmaster3000.member.application.port.FindLockerPort;
+import gymmaster3000.locker.application.port.FindLockerPort;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -17,6 +18,7 @@ public class FindLockerUseCase {
 
     private final FindLockerPort port;
 
+    @Transactional
     public LockerView apply(@Valid @NonNull FindLockerQuery query) {
         var locker = port.findBy(query.lockerId)
                          .orElseThrow(() -> new LockerNotFoundException(query.lockerId.value()));

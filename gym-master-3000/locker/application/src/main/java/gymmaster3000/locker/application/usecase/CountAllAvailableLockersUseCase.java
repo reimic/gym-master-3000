@@ -1,7 +1,7 @@
-package gymmaster3000.member.application.usecase;
+package gymmaster3000.locker.application.usecase;
 
+import gymmaster3000.locker.application.port.FindAllLockersPort;
 import gymmaster3000.locker.domain.entity.Locker;
-import gymmaster3000.member.application.port.FindAllLockersPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

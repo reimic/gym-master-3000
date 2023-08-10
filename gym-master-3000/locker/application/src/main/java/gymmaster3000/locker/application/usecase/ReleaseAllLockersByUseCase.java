@@ -1,9 +1,9 @@
-package gymmaster3000.member.application.usecase;
+package gymmaster3000.locker.application.usecase;
 
+import gymmaster3000.locker.application.port.FindAllLockersPort;
+import gymmaster3000.locker.application.port.SaveAllLockersPort;
 import gymmaster3000.locker.domain.entity.Locker;
 import gymmaster3000.locker.domain.valueobject.RenterId;
-import gymmaster3000.member.application.port.FindAllLockersPort;
-import gymmaster3000.member.application.port.SaveAllLockersPort;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +14,13 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @RequiredArgsConstructor
 @Validated
-public class ReleaseAllLockersByRenterUseCase {
+public class ReleaseAllLockersByUseCase {
 
     private final FindAllLockersPort findAllLockersPort;
     private final SaveAllLockersPort saveAllLockersPort;
 
     @Transactional
-    public void apply(@Valid @NonNull ReleaseAllLockersByRenterCommand command) {
+    public void apply(@Valid @NonNull ReleaseAllLockersByCommand command) {
         var lockers = findAllLockersPort.findAll()
                                         .stream()
                                         .filter(locker -> locker.isRentedBy(command.renterId))
@@ -29,7 +29,7 @@ public class ReleaseAllLockersByRenterUseCase {
         saveAllLockersPort.saveAll(lockers);
     }
 
-    public record ReleaseAllLockersByRenterCommand(@NonNull RenterId renterId) {
+    public record ReleaseAllLockersByCommand(@NonNull RenterId renterId) {
 
     }
 
