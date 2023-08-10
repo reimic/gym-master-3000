@@ -7,6 +7,6 @@ public interface IncomingEvent extends Serializable {
 
     LocalDateTime getCreateDate();
 
-    Integer getSequenceNumber();
+    int getSequenceNumber();
 
 }

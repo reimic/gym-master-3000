@@ -11,6 +11,6 @@ import java.time.LocalDateTime;
 public class ReleaseLockerEvent implements IncomingEvent {
 
     LocalDateTime createDate;
-    Integer sequenceNumber;
+    int sequenceNumber;
 
 }

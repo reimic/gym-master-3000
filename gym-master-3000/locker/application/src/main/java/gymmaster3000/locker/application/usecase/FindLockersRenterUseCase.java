@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -18,6 +19,7 @@ public class FindLockersRenterUseCase {
 
     private final FindLockerPort port;
 
+    @Transactional
     public RenterId apply(@Valid @NonNull FindLockersRenterQuery query) {
         return port.findBy(query.lockerId)
                    .orElseThrow(() -> new LockerNotFoundException(query.lockerId.value()))

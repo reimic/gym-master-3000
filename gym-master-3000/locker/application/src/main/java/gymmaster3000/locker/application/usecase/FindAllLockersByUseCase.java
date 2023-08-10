@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class FindAllLockersByUseCase {
 
     private final FindAllLockersPort port;
 
+    @Transactional
     public List<LockerView> apply(@Valid @NonNull FindAllLockersByQuery query) {
         return port.findAll()
                    .stream()

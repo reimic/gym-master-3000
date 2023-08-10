@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class RentLockerEvent implements IncomingEvent {
 
     LocalDateTime createDate;
-    Integer sequenceNumber;
+    int sequenceNumber;
     RenterId renterId;
 
 }

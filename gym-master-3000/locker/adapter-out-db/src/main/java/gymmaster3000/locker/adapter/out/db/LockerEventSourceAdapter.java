@@ -94,7 +94,7 @@ public class LockerEventSourceAdapter implements SaveLockerPort,
                                 .sorted(Comparator.comparingInt(IncomingEvent::getSequenceNumber))
                                 .toList();
 
-        return Locker.recreate(events, eventStream.getVersion());
+        return Locker.recreate(eventStream.getVersion(), events);
     }
 
 }

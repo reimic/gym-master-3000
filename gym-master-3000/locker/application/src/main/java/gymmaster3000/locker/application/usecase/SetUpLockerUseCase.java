@@ -16,7 +16,7 @@ public class SetUpLockerUseCase {
 
     @Transactional
     public UUID apply(SetUpLockerCommand command) {
-        var locker = Locker.create();
+        var locker = Locker.setup();
         port.save(locker);
         return locker.getLockerId()
                      .value();

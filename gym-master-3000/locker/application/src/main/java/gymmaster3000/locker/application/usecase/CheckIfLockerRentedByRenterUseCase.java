@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 @Service
@@ -17,6 +18,7 @@ public class CheckIfLockerRentedByRenterUseCase {
 
     private final FindLockerPort port;
 
+    @Transactional
     public boolean apply(@Valid @NonNull CheckIfLockerRentedByRenterQuery query) {
         return port.findBy(query.lockerId)
                    .map(locker -> locker.isRentedBy(query.renterId))

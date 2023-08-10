@@ -1,15 +1,21 @@
 package gymmaster3000.locker.domain.entity;
 
-import gymmaster3000.locker.domain.valueobject.LockerId;
-import gymmaster3000.locker.domain.valueobject.RenterId;
+import java.util.UUID;
 
-public record LockerView(LockerId lockerId, RenterId currentRenterId) {
+public record LockerView(UUID lockerId, UUID currentRenterId) {
 
     public static LockerView from(Locker locker) {
         return new LockerView(
-                locker.getLockerId(),
+                locker.getLockerId()
+                      .value(),
                 locker.getCurrentRenterId()
-                      .orElse(null));
+                      .isPresent() ? locker.getCurrentRenterId()
+                                           .get()
+                                           .value() : null);
+    }
+
+    public String toJSON() {
+        return "{\"lockerId\":\"" + lockerId + "\",\"currentRenterId\":\"" + currentRenterId + "\"}";
     }
 
 }
