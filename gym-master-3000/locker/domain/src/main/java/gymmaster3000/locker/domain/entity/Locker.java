@@ -23,7 +23,6 @@ public class Locker {
     private static final String LOG_SET_UP_LOCKER = "Set up a new locker with id=%s with event: %s";
     private static final String LOG_RENTED_LOCKER = "Rented a locker with id=%s with event: %s";
     private static final String LOG_RELEASED_LOCKER = "Released %s locker with id=%s with event: %s";
-    private static final String LOG_DISPATCHED_NOT_IMPLEMENTED_EVENT = "Attempted to dispatch a not implemented event in locker with id=%s with event: %s";
     private static final String AVAILABLE = "an available";
     private static final String RENTED = "a rented";
     @Getter
@@ -49,6 +48,8 @@ public class Locker {
                                     .sequenceNumber(sequenceNumer++)
                                     .lockerId(LockerId.of(UUID.randomUUID()))
                                     .build();
+        log.info(LOG_SET_UP_LOCKER.formatted(setup.getLockerId()
+                                                  .value(), setup.toString()));
         appendAndHandle(setup);
     }
 
@@ -65,6 +66,7 @@ public class Locker {
                                   .sequenceNumber(sequenceNumer++)
                                   .renterId(renterId)
                                   .build();
+        log.info(LOG_RENTED_LOCKER.formatted(this.lockerId.value(), rent.toString()));
         appendAndHandle(rent);
     }
 
@@ -77,6 +79,10 @@ public class Locker {
                                         .createDate(LocalDateTime.now())
                                         .sequenceNumber(sequenceNumer++)
                                         .build();
+        var lockerStatus = this.currentRenterId == null ? AVAILABLE : RENTED;
+        log.info(LOG_RELEASED_LOCKER.formatted(lockerStatus,
+                                               this.lockerId.value(),
+                                               release.toString()));
         appendAndHandle(release);
     }
 
@@ -119,22 +125,12 @@ public class Locker {
 
     private void handleDispatcher(IncomingEvent event) {
         if (event instanceof SetupLockerEvent setup) {
-            log.info(LOG_SET_UP_LOCKER.formatted(setup.getLockerId()
-                                                      .value(), setup.toString()));
             handle(setup);
         } else if (event instanceof RentLockerEvent rent) {
-            log.info(LOG_RENTED_LOCKER.formatted(this.lockerId.value(), rent.toString()));
             handle(rent);
         } else if (event instanceof ReleaseLockerEvent release) {
-            var lockerStatus = this.currentRenterId == null ? AVAILABLE : RENTED;
-            log.info(LOG_RELEASED_LOCKER.formatted(lockerStatus,
-                                                   this.lockerId.value(),
-                                                   release.toString()));
             handle(release);
         } else {
-            log.info(LOG_DISPATCHED_NOT_IMPLEMENTED_EVENT.formatted(
-                    this.lockerId.value(),
-                    event.toString()));
             throw new LockerDispatchedNotImplementedEventException(this.lockerId.value(), event.toString());
         }
     }

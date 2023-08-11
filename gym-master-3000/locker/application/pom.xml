@@ -13,7 +13,6 @@
     <version>${revision}</version>
     <name>Locker's Application</name>
     <packaging>jar</packaging>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -33,6 +32,4 @@
             <version>${revision}</version>
         </dependency>
     </dependencies>
-
-
 </project>
