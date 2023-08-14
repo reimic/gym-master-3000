@@ -20,11 +20,9 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "lockerId")
 public class Locker {
 
-    private static final String LOG_SET_UP_LOCKER = "Set up a new locker with id=%s with event: %s";
-    private static final String LOG_RENTED_LOCKER = "Rented a locker with id=%s with event: %s";
-    private static final String LOG_RELEASED_LOCKER = "Released %s locker with id=%s with event: %s";
-    private static final String AVAILABLE = "an available";
-    private static final String RENTED = "a rented";
+    private static final String LOG_SETTING_UP_LOCKER = "Setting up a new locker with id=%s with event: %s";
+    private static final String LOG_RENTING_LOCKER = "Renting a locker with id=%s with event: %s";
+    private static final String LOG_RELEASING_LOCKER = "Releasing a locker with id=%s with event: %s";
     @Getter
     private long version;
     private int sequenceNumer;
@@ -48,7 +46,7 @@ public class Locker {
                                     .sequenceNumber(sequenceNumer++)
                                     .lockerId(LockerId.of(UUID.randomUUID()))
                                     .build();
-        log.info(LOG_SET_UP_LOCKER.formatted(setup.getLockerId()
+        log.info(LOG_SETTING_UP_LOCKER.formatted(setup.getLockerId()
                                                   .value(), setup.toString()));
         appendAndHandle(setup);
     }
@@ -66,7 +64,7 @@ public class Locker {
                                   .sequenceNumber(sequenceNumer++)
                                   .renterId(renterId)
                                   .build();
-        log.info(LOG_RENTED_LOCKER.formatted(this.lockerId.value(), rent.toString()));
+        log.info(LOG_RENTING_LOCKER.formatted(this.lockerId.value(), rent.toString()));
         appendAndHandle(rent);
     }
 
@@ -75,15 +73,16 @@ public class Locker {
     }
 
     public void release() {
-        var release = ReleaseLockerEvent.builder()
-                                        .createDate(LocalDateTime.now())
-                                        .sequenceNumber(sequenceNumer++)
-                                        .build();
-        var lockerStatus = this.currentRenterId == null ? AVAILABLE : RENTED;
-        log.info(LOG_RELEASED_LOCKER.formatted(lockerStatus,
-                                               this.lockerId.value(),
-                                               release.toString()));
-        appendAndHandle(release);
+        if (isRented()) {
+            var release = ReleaseLockerEvent.builder()
+                                            .createDate(LocalDateTime.now())
+                                            .sequenceNumber(sequenceNumer++)
+                                            .build();
+            log.info(LOG_RELEASING_LOCKER.formatted(
+                    this.lockerId.value(),
+                    release.toString()));
+            appendAndHandle(release);
+        }
     }
 
     private void handle(ReleaseLockerEvent release) {

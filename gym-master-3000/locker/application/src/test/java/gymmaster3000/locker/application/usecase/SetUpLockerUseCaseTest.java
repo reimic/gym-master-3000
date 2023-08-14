@@ -2,7 +2,7 @@ package gymmaster3000.locker.application.usecase;
 
 import gymmaster3000.locker.domain.entity.Locker;
 import gymmaster3000.locker.domain.event.IncomingEvent;
-import gymmaster3000.locker.domain.event.SetupLockerEvent;
+import gymmaster3000.locker.domain.event.SetUpLockerEvent;
 import gymmaster3000.locker.application.port.SaveLockerPort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,7 +42,7 @@ class SetUpLockerUseCaseTest {
             List<IncomingEvent> events = (List<IncomingEvent>) pendingEvents.get(argument);
             assertThat(events).isNotNull()
                               .hasSize(1);
-            assertThat(events.get(0)).isInstanceOf(SetupLockerEvent.class);
+            assertThat(events.get(0)).isInstanceOf(SetUpLockerEvent.class);
             assertThat(argument.getCurrentRenterId()).isEmpty();
             return null;
         }).when(saveLockerPort)
