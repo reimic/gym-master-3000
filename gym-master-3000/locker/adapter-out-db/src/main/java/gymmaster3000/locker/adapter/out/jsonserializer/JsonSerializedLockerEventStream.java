@@ -1,6 +1,7 @@
 package gymmaster3000.locker.adapter.out.jsonserializer;
 
 import gymmaster3000.locker.adapter.out.db.LockerEventStream;
+import gymmaster3000.locker.adapter.out.db.SerializerProfile;
 import gymmaster3000.locker.adapter.out.javaserializer.JavaSerializedLockerEvent;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "lockerId", callSuper = false)
-@Profile("json-serializer")
+@Profile(SerializerProfile.JSON_SERIALIZER)
 @RequiredArgsConstructor
 public class JsonSerializedLockerEventStream implements LockerEventStream<String, JsonSerializedLockerEvent> {
 

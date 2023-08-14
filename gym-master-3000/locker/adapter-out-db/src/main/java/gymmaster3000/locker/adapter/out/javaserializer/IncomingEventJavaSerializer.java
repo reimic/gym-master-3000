@@ -1,6 +1,7 @@
 package gymmaster3000.locker.adapter.out.javaserializer;
 
 import gymmaster3000.locker.adapter.out.db.IncomingEventSerializer;
+import gymmaster3000.locker.adapter.out.db.SerializerProfile;
 import gymmaster3000.locker.domain.event.IncomingEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ import java.io.*;
 import java.util.UUID;
 
 @Component
-@Profile("java-serializer")
+@Profile(SerializerProfile.JAVA_SERIALIZER)
 public class IncomingEventJavaSerializer implements IncomingEventSerializer<byte[], JavaSerializedLockerEvent> {
 
     @Override

@@ -1,18 +1,17 @@
 package gymmaster3000.locker.adapter.out.javaserializer;
 
 import gymmaster3000.locker.adapter.out.db.LockerEvent;
+import gymmaster3000.locker.adapter.out.db.SerializerProfile;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(of = "eventId", callSuper = false)
-@Profile("java-serializer")
+@Profile(SerializerProfile.JAVA_SERIALIZER)
 @RequiredArgsConstructor
 public class JavaSerializedLockerEvent implements LockerEvent<byte[]> {
 

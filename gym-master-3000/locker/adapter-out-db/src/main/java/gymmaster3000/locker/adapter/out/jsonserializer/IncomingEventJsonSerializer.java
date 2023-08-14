@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import gymmaster3000.locker.adapter.out.db.IncomingEventSerializer;
+import gymmaster3000.locker.adapter.out.db.SerializerProfile;
 import gymmaster3000.locker.domain.event.IncomingEvent;
 import gymmaster3000.locker.domain.event.ReleaseLockerEvent;
 import gymmaster3000.locker.domain.event.RentLockerEvent;
@@ -25,7 +26,7 @@ import java.util.UUID;
 import static gymmaster3000.locker.domain.event.LockerEventType.*;
 
 @Component
-@Profile("json-serializer")
+@Profile(SerializerProfile.JSON_SERIALIZER)
 public class IncomingEventJsonSerializer implements IncomingEventSerializer<String, JsonSerializedLockerEvent> {
 
     private final ObjectMapper objectMapper;

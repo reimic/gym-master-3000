@@ -1,6 +1,7 @@
 package gymmaster3000.locker.adapter.out.javaserializer;
 
 import gymmaster3000.locker.adapter.out.db.LockerEventStreamPort;
+import gymmaster3000.locker.adapter.out.db.SerializerProfile;
 import gymmaster3000.locker.domain.entity.Locker;
 import gymmaster3000.locker.domain.event.IncomingEvent;
 import gymmaster3000.locker.domain.valueobject.LockerId;
@@ -18,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Component
-@Profile("java-serializer")
+@Profile(SerializerProfile.JAVA_SERIALIZER)
 @RequiredArgsConstructor
 public class JavaSerializedLockerEventStreamAdapter implements LockerEventStreamPort {
 

@@ -1,6 +1,7 @@
 package gymmaster3000.locker.adapter.out.javaserializer;
 
 import gymmaster3000.locker.adapter.out.db.LockerEventStream;
+import gymmaster3000.locker.adapter.out.db.SerializerProfile;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "lockerId", callSuper = false)
-@Profile("java-serializer")
+@Profile(SerializerProfile.JAVA_SERIALIZER)
 @RequiredArgsConstructor
 public class JavaSerializedLockerEventStream implements LockerEventStream<byte[], JavaSerializedLockerEvent> {
 
