@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class RentLockerEvent implements IncomingEvent {
 
+    LockerEventType eventType = LockerEventType.RENT_LOCKER;
     LocalDateTime createDate;
     int sequenceNumber;
     RenterId renterId;

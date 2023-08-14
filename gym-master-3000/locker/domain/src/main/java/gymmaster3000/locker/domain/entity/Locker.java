@@ -3,7 +3,7 @@ package gymmaster3000.locker.domain.entity;
 import gymmaster3000.locker.domain.event.IncomingEvent;
 import gymmaster3000.locker.domain.event.ReleaseLockerEvent;
 import gymmaster3000.locker.domain.event.RentLockerEvent;
-import gymmaster3000.locker.domain.event.SetupLockerEvent;
+import gymmaster3000.locker.domain.event.SetUpLockerEvent;
 import gymmaster3000.locker.domain.valueobject.LockerId;
 import gymmaster3000.locker.domain.valueobject.RenterId;
 import lombok.EqualsAndHashCode;
@@ -43,7 +43,7 @@ public class Locker {
     }
 
     private Locker() {
-        var setup = SetupLockerEvent.builder()
+        var setup = SetUpLockerEvent.builder()
                                     .createDate(LocalDateTime.now())
                                     .sequenceNumber(sequenceNumer++)
                                     .lockerId(LockerId.of(UUID.randomUUID()))
@@ -53,7 +53,7 @@ public class Locker {
         appendAndHandle(setup);
     }
 
-    private void handle(SetupLockerEvent setup) {
+    private void handle(SetUpLockerEvent setup) {
         this.lockerId = setup.getLockerId();
     }
 
@@ -124,7 +124,7 @@ public class Locker {
     }
 
     private void handleDispatcher(IncomingEvent event) {
-        if (event instanceof SetupLockerEvent setup) {
+        if (event instanceof SetUpLockerEvent setup) {
             handle(setup);
         } else if (event instanceof RentLockerEvent rent) {
             handle(rent);

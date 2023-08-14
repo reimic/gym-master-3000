@@ -9,8 +9,9 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class SetupLockerEvent implements IncomingEvent {
+public class SetUpLockerEvent implements IncomingEvent {
 
+    LockerEventType eventType = LockerEventType.SET_UP_LOCKER;
     LocalDateTime createDate;
     int sequenceNumber;
     LockerId lockerId;

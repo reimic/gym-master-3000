@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 public interface IncomingEvent extends Serializable {
 
+    LockerEventType getEventType();
+
     LocalDateTime getCreateDate();
 
     int getSequenceNumber();
