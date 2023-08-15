@@ -15,9 +15,8 @@ public class MemberId implements ValueObject<UUID>, Serializable {
 
     public static MemberId of(UUID value) {
         if (value == null) {
-            throw new IllegalArgumentException(INVALID_ID);
+            throw new IllegalArgumentException(INVALID_ID.formatted("null"));
         }
-
         return new MemberId(value);
     }
 
