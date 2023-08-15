@@ -25,4 +25,23 @@ public class MemberId implements ValueObject<UUID>, Serializable {
         return this.value;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof MemberId other)) {
+            return false;
+        }
+        return this.value.equals(other.value);
+    }
+
+    @Override
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = result * PRIME + this.value.hashCode();
+        return result;
+    }
+
 }

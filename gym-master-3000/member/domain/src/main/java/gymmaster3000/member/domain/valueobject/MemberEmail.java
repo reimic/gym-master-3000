@@ -2,6 +2,7 @@ package gymmaster3000.member.domain.valueobject;
 
 import java.io.Serializable;
 import java.util.regex.Pattern;
+
 @SelfValidating
 public class MemberEmail implements ValueObject<String>, Serializable {
 
@@ -25,6 +26,25 @@ public class MemberEmail implements ValueObject<String>, Serializable {
     @Override
     public String value() {
         return this.value;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof MemberEmail other)) {
+            return false;
+        }
+        return this.value.equals(other.value);
+    }
+
+    @Override
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = result * PRIME + this.value.hashCode();
+        return result;
     }
 
 }
