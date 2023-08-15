@@ -1,14 +1,19 @@
 package gymmaster3000.member.domain.entity;
 
-import gymmaster3000.member.domain.valueobject.MemberEmail;
-import gymmaster3000.member.domain.valueobject.MemberId;
+import java.util.UUID;
 
-public record MemberView(MemberId memberId, MemberEmail memberEmail) {
+public record MemberView(UUID memberId, String memberEmail) {
 
     public static MemberView from(Member member) {
         return new MemberView(
-                member.getMemberId(),
-                member.getMemberEmail());
+                member.getMemberId()
+                      .value(),
+                member.getMemberEmail()
+                      .value());
+    }
+
+    public String toJSON() {
+        return "{\"memberId\":\"" + memberId + "\",\"memberEmail\":\"" + memberEmail + "\"}";
     }
 
 }

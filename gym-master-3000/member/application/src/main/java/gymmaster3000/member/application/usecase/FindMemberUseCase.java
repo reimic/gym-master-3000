@@ -17,13 +17,13 @@ public class FindMemberUseCase {
 
     private final FindMemberPort port;
 
-    public MemberView apply(@Valid GetMemberQuery query) {
+    public MemberView apply(@Valid FindMemberUseCase.FindMemberQuery query) {
         var member = port.findBy(query.memberId)
                          .orElseThrow(() -> new MemberNotFoundException(query.memberId.value()));
         return MemberView.from(member);
     }
 
-    public record GetMemberQuery(
+    public record FindMemberQuery(
             @NotNull MemberId memberId
     ) {
 

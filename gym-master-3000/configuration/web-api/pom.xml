@@ -40,22 +40,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
         </dependency>
-
         <!-- member -->
-
-        <!--        <dependency>-->
-        <!--            <groupId>acmecorp.gymmaster3000.member</groupId>-->
-        <!--            <artifactId>adapter-in-web</artifactId>-->
-        <!--            <version>${revision}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>acmecorp.gymmaster3000.member</groupId>-->
-        <!--            <artifactId>adapter-out-db</artifactId>-->
-        <!--            <version>${revision}</version>-->
-        <!--        </dependency>-->
-
+        <dependency>
+            <groupId>acmecorp.gymmaster3000.member</groupId>
+            <artifactId>adapter-in-web</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>acmecorp.gymmaster3000.member</groupId>
+            <artifactId>adapter-out-db</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!-- locker -->
-
         <dependency>
             <groupId>acmecorp.gymmaster3000.locker</groupId>
             <artifactId>adapter-in-web</artifactId>
@@ -66,23 +62,23 @@
             <artifactId>adapter-out-db</artifactId>
             <version>${revision}</version>
         </dependency>
+        <!-- tests -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test-autoconfigure</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
-
     <build>
         <resources>
             <resource>
@@ -259,5 +255,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

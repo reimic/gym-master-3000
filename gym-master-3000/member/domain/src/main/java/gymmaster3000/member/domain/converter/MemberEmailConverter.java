@@ -7,15 +7,12 @@ public class MemberEmailConverter implements AttributeConverter<MemberEmail, Str
 
     @Override
     public String convertToDatabaseColumn(final MemberEmail attribute) {
-        if (attribute == null) {
-            return null;
-        }
         return attribute.value();
     }
 
     @Override
     public MemberEmail convertToEntityAttribute(final String dbData) {
-        return new MemberEmail(dbData);
+        return MemberEmail.of(dbData);
     }
 
 }

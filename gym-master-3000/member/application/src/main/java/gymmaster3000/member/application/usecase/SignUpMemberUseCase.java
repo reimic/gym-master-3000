@@ -21,7 +21,7 @@ public class SignUpMemberUseCase {
 
     @Transactional
     public UUID apply(@Valid SignUpMemberCommand command) {
-        var member = Member.create()
+        var member = Member.signUp()
                            .withNewEmail(command.memberEmail);
         return port.save(member);
     }
