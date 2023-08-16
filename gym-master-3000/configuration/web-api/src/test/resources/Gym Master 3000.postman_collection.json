@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "b68ad875-a201-4ae3-ac1b-6663b93858ea",
+		"name": "Gym Master 3000",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26243272"
+	},
+	"item": [
+		{
+			"name": "Member",
+			"item": [
+				{
+					"name": "Find Member",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/members/find?memberId={{memberId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"members",
+								"find"
+							],
+							"query": [
+								{
+									"key": "memberId",
+									"value": "{{memberId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign Up Member",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/members/signup?memberEmail={{memberEmail}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"members",
+								"signup"
+							],
+							"query": [
+								{
+									"key": "memberEmail",
+									"value": "{{memberEmail}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Members",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/members/findAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"members",
+								"findAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Locker",
+			"item": [
+				{
+					"name": "Set Up Locker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/setup",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"setup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rent Locker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lockerId\": \"{{lockerId}}\",\r\n    \"renterId\": \"{{renterId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/rent",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"rent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rent Locker (uuid)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lockerId\": \"99474779-39bf-4d5c-b0ed-f946267c3ba4\",\r\n    \"renterId\": \"9843604f-acc6-4dd2-b6c1-918445aaafd0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/rent",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"rent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Release Locker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/release?lockerId={{lockerId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"release"
+							],
+							"query": [
+								{
+									"key": "lockerId",
+									"value": "{{lockerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Locker",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/find?lockerId={{lockerId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"find"
+							],
+							"query": [
+								{
+									"key": "lockerId",
+									"value": "{{lockerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Lockers Renter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/find/renter?lockerId={{lockerId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"find",
+								"renter"
+							],
+							"query": [
+								{
+									"key": "lockerId",
+									"value": "{{lockerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Release All Lockers By",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/releaseAll?renterId={{renterId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"releaseAll"
+							],
+							"query": [
+								{
+									"key": "renterId",
+									"value": "{{renterId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Lockers By",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/findAll?renterId={{renterId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"findAll"
+							],
+							"query": [
+								{
+									"key": "renterId",
+									"value": "{{renterId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Lockers By (no renter)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/findAll",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"findAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count All Available Lockers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/findAll/count/available",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"findAll",
+								"count",
+								"available"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Count All Rented Lockers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/findAll/count/rented",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"findAll",
+								"count",
+								"rented"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if Locker Is Rented",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/find/isrented?lockerId={{lockerId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"find",
+								"isrented"
+							],
+							"query": [
+								{
+									"key": "lockerId",
+									"value": "{{lockerId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if Locker Is Rented By Renter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/lockers/find/isrentedby?lockerId={{lockerId}}&renterId={{renterId}}",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"lockers",
+								"find",
+								"isrentedby"
+							],
+							"query": [
+								{
+									"key": "lockerId",
+									"value": "{{lockerId}}"
+								},
+								{
+									"key": "renterId",
+									"value": "{{renterId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
