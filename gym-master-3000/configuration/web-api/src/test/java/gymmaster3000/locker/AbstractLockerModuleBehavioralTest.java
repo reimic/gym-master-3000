@@ -276,6 +276,92 @@ abstract class AbstractLockerModuleBehavioralTest {
         assertThat(isRentedByRenterAfterRelease).isFalse();
     }
 
+    /**
+     * Behavioral Test
+     * <p>
+     * The User wants to rent a previously available locker and confirm the locker is in fact listed as rented.
+     * <p></p>
+     * Expected
+     * <p>
+     * The App should return a boolean {@code true} for a request to confirm it is in fact rented.
+     */
+    @BehavioralTest
+    protected void shouldRentALocker_andThenReturnIfItIsRented() throws Exception {
+        // given
+        var renterId = getRandomStringUUID();
+        var lockerId = setUpLocker();
+        var isRentedByRenter = isRentedByRenter(lockerId, renterId);
+        assertThat(isRentedByRenter).isFalse();
+        // when-then
+        rentLocker(lockerId, renterId);
+        var isRentedByRenterAfterRenting = isRentedByRenter(lockerId, renterId);
+        assertThat(isRentedByRenterAfterRenting).isTrue();
+        // when-then
+        var result = mockMvc
+                .perform(get(
+                        "http://localhost:8080/api/v1/lockers/find/isrented?lockerId={lockerId}",
+                        lockerId))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        assertThat(result).isNotBlank();
+        var resultBoolean = Boolean.parseBoolean(result);
+        assertThat(resultBoolean).isTrue();
+    }
+
+    /**
+     * Behavioral Test
+     * <p>
+     * The User wants to list all lockers.
+     * <p></p>
+     * Expected
+     * <p>
+     * The App should return a list with all lockers.
+     */
+    @BehavioralTest
+    protected void shouldReturnAllLockers() throws Exception {
+        // given
+        var lockerId1 = setUpLocker();
+        var lockerId2 = setUpLocker();
+        // when-then
+        var result = mockMvc
+                .perform(get(
+                        "http://localhost:8080/api/v1/lockers/findAll"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        assertThat(result)
+                .isNotBlank()
+                .contains(lockerId1)
+                .contains(lockerId2);
+    }
+
+    /**
+     * Behavioral Test
+     * <p>
+     * The User wants to find a particular locker by its id.
+     * <p></p>
+     * Expected
+     * <p>
+     * The App should return the locker's view.
+     */
+    @BehavioralTest
+    protected void shouldReturnQueriedLocker() throws Exception {
+        // given
+        var lockerId = setUpLocker();
+        // when-then
+        var result = mockMvc
+                .perform(get(
+                        "http://localhost:8080/api/v1/lockers/find?lockerId={lockerId}", lockerId))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        assertThat(result)
+                .isNotBlank()
+                .contains(lockerId)
+                .contains("null");
+    }
+
     // ---- Utility Methods ----
 
     /**
