@@ -19,6 +19,7 @@
         <module>application</module>
         <module>adapter-out-db</module>
         <module>adapter-in-web</module>
+        <module>adapter-in-member</module>
     </modules>
 
 </project>

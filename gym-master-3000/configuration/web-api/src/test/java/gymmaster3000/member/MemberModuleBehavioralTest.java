@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -137,8 +139,8 @@ public class MemberModuleBehavioralTest {
     void shouldQueryAllMembers() throws Exception {
         // given
         var uuid1 = signUpMember("test1@test");
-        var uuid2 =signUpMember("test2@test");
-        var uuid3 =signUpMember("test3@test");
+        var uuid2 = signUpMember("test2@test");
+        var uuid3 = signUpMember("test3@test");
         // when-then
         String result = findAllMembers();
         assertThat(result)
@@ -179,6 +181,49 @@ public class MemberModuleBehavioralTest {
     }
 
     /**
+     * Behavioral Test
+     * <p>
+     * The User is signed up for a gym membership for some time. They use several lockers, each a different number of times.
+     * At some point they want to get recommendations for 3 most frequently used lockers, so that they can consider booking the same lockers as they usually do.
+     * <p></p>
+     * Then, they use a locker that was not on the list a number of times that would put it in top 3. However, they do it within one day, and there is no expectation the App will reflect this usage right away.
+     * <p></p>
+     * Expected
+     * <p>
+     * The App should return a list of 3 lockerIds in order from most frequently used to least used. Then it should allow the user to rent and release a different locker twice.
+     * After that, when the user makes another call for recommendations it should return the same results as previous, ignoring the most recent rentings.
+     */
+    @BehavioralTest
+    void shouldQueryForThreeMostFrequentlyUsedLockers_rentAndReleaseOtherLockers_andGetSameResultAsBefore() throws Exception {
+        // given
+        var email = "test@test";
+        var memberId = signUpMember(email);
+        var lockerId1 = setUpLocker();
+        var lockerId2 = setUpLocker();
+        var lockerId3 = setUpLocker();
+        var lockerId4 = setUpLocker();
+        rentAndReleaseLockerTimes(4, lockerId4, memberId);
+        rentAndReleaseLockerTimes(3, lockerId3, memberId);
+        rentAndReleaseLockerTimes(2, lockerId2, memberId);
+        rentAndReleaseLockerTimes(1, lockerId1, memberId);
+        // when-then
+        var result = getPreferredLockers(memberId, 3);
+        assertThat(result)
+                .contains(lockerId4)
+                .contains(lockerId3)
+                .contains(lockerId2)
+                .doesNotContain(lockerId1);
+        // when-then
+        rentAndReleaseLockerTimes(2, lockerId1, memberId);
+        var resultAfterChange = getPreferredLockers(memberId, 3);
+        assertThat(resultAfterChange)
+                .contains(lockerId4)
+                .contains(lockerId3)
+                .contains(lockerId2)
+                .doesNotContain(lockerId1);
+    }
+
+    /**
      * Utility method querying the App for all members via en endpoint.
      * <p>
      * Uses {@link MockMvc} for the request. Asserts appropriate status and return, if applicable.
@@ -211,6 +256,91 @@ public class MemberModuleBehavioralTest {
                       .andReturn()
                       .getResponse()
                       .getContentAsString();
+    }
+
+    /**
+     * Utility method persisting a locker via en endpoint.
+     * <p>
+     * Uses {@link MockMvc} for the request. Asserts appropriate status and return, if applicable.
+     * <p>
+     *
+     * @return a persisted locker's UUID as a string
+     */
+    private String setUpLocker() throws Exception {
+        var lockerId = mockMvc
+                .perform(post("http://localhost:8080/api/v1/lockers/setup")
+                                 .contentType(MediaType.APPLICATION_JSON))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        assertThat(lockerId)
+                .isNotBlank()
+                .matches(PATTERN_UUID);
+        return lockerId;
+    }
+
+    /**
+     * Utility method renting a locker via en endpoint.
+     * <p>
+     * Uses {@link MockMvc} for the request. Asserts appropriate status and return, if applicable.
+     */
+    private void rentLocker(final String lockerId, final String renterId) throws Exception {
+        var request = """
+                      {
+                      "lockerId": "%s",
+                      "renterId": "%s"
+                      }
+                      """.formatted(lockerId, renterId);
+        mockMvc
+                .perform(post("http://localhost:8080/api/v1/lockers/rent")
+                                 .contentType(MediaType.APPLICATION_JSON)
+                                 .content(request))
+                .andExpect(status().isOk());
+    }
+
+    /**
+     * Utility method releasing a locker via an endpoint.
+     * <p>
+     * Uses {@link MockMvc} for the request. Asserts appropriate status and return, if applicable.
+     */
+    private void releaseLocker(final String lockerId) throws Exception {
+        mockMvc
+                .perform(post("http://localhost:8080/api/v1/lockers/release?lockerId={lockerId}", lockerId))
+                .andExpect(status().isOk());
+    }
+
+    /**
+     * Utility method getting a list of N preferred lockers for a given member via an endpoint.
+     * <p>
+     * Uses {@link MockMvc} for the request. Asserts appropriate status and return, if applicable.
+     */
+    private String getPreferredLockers(final String memberId, final int count) throws Exception {
+        return mockMvc.perform(get(
+                              "http://localhost:8080/api/v1/members/preferred/lockers?memberId={memberId}&quantity={quantity}",
+                              memberId,
+                              count)
+                                       .contentType(MediaType.APPLICATION_JSON))
+                      .andExpect(status().isOk())
+                      .andReturn()
+                      .getResponse()
+                      .getContentAsString();
+    }
+
+    /**
+     * Utility method renting and releasing a locker a set number of times via an endpoint.
+     * <p>
+     * Uses {@link MockMvc} for the request. Asserts appropriate status and return, if applicable.
+     */
+    private void rentAndReleaseLockerTimes(final int count, final String lockerId, final String memberId) {
+        IntStream.range(0, count)
+                 .forEach(element -> {
+                     try {
+                         rentLocker(lockerId, memberId);
+                         releaseLocker(lockerId);
+                     } catch (Exception e) {
+                         throw new RuntimeException(e);
+                     }
+                 });
     }
 
 }

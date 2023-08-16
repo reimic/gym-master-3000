@@ -51,6 +51,11 @@
             <artifactId>adapter-out-db</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>acmecorp.gymmaster3000.member</groupId>
+            <artifactId>adapter-out-locker</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!-- locker -->
         <dependency>
             <groupId>acmecorp.gymmaster3000.locker</groupId>
@@ -60,6 +65,11 @@
         <dependency>
             <groupId>acmecorp.gymmaster3000.locker</groupId>
             <artifactId>adapter-out-db</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>acmecorp.gymmaster3000.locker</groupId>
+            <artifactId>adapter-in-member</artifactId>
             <version>${revision}</version>
         </dependency>
         <!-- tests -->

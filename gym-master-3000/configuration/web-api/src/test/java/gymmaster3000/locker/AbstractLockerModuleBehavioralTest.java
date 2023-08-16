@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 abstract class AbstractLockerModuleBehavioralTest {
 
-    public static final String REGEX = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
+    protected static final String PATTERN_UUID = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
     @Autowired
     protected MockMvc mockMvc;
 
@@ -32,7 +32,7 @@ abstract class AbstractLockerModuleBehavioralTest {
      * <p></p>
      * Expected
      * <p>
-     * The App should set up a new locker and return it's {@link UUID}.
+     * The App should set up a new locker and return its {@link UUID}.
      */
     @BehavioralTest
     protected void shouldSetUpLocker() throws Exception {
@@ -45,7 +45,7 @@ abstract class AbstractLockerModuleBehavioralTest {
                             .getContentAsString();
         assertThat(result)
                 .isNotBlank()
-                .matches(REGEX);
+                .matches(PATTERN_UUID);
     }
 
     /**
@@ -146,7 +146,7 @@ abstract class AbstractLockerModuleBehavioralTest {
      * <p></p>
      * Expected
      * <p>
-     * The App should return {@code 409 Conflict} status for a request to rent a already rented locker.
+     * The App should return {@code 409 Conflict} status for a request to rent an already rented locker.
      * <p>
      *
      * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#name-409-conflict">RFC 9110 HTTP Semantics: Section 15.5.10</a>
@@ -307,7 +307,7 @@ abstract class AbstractLockerModuleBehavioralTest {
                 .getContentAsString();
         assertThat(lockerId)
                 .isNotBlank()
-                .matches(REGEX);
+                .matches(PATTERN_UUID);
         return lockerId;
     }
 
@@ -365,9 +365,6 @@ abstract class AbstractLockerModuleBehavioralTest {
      * Utility method releasing all lockers rented by given renter via an endpoint.
      * <p>
      * Uses {@link MockMvc} for the request. Asserts appropriate status and return, if applicable.
-     * <p>
-     *
-     * @throws Exception
      */
     private void releaseAllLockersBy(final String renterId) throws Exception {
         mockMvc.perform(post("http://localhost:8080/api/v1/lockers/releaseAll?renterId={renterId}", renterId))

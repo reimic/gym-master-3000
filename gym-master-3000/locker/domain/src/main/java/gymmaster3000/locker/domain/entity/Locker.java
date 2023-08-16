@@ -27,6 +27,7 @@ public class Locker {
     private long version;
     private int sequenceNumer;
     private List<IncomingEvent> pendingEvents = new ArrayList<>();
+    private List<IncomingEvent> handledEvents = new ArrayList<>();
     @Getter
     private LockerId lockerId;
     private RenterId currentRenterId;
@@ -47,7 +48,7 @@ public class Locker {
                                     .lockerId(LockerId.of(UUID.randomUUID()))
                                     .build();
         log.info(LOG_SETTING_UP_LOCKER.formatted(setup.getLockerId()
-                                                  .value(), setup.toString()));
+                                                      .value(), setup.toString()));
         appendAndHandle(setup);
     }
 
@@ -111,6 +112,13 @@ public class Locker {
         return renterId.equals(currentRenterId);
     }
 
+    public long getCountRentedBy(RenterId renterId) {
+        return handledEvents.stream()
+                            .filter(RentLockerEvent.class::isInstance)
+                            .map(event -> ((RentLockerEvent) event).getRenterId())
+                            .count();
+    }
+
     public static Locker recreate(long version, List<IncomingEvent> events) {
         var locker = new Locker(version, events.size());
         events.forEach(locker::handleDispatcher);
@@ -125,10 +133,13 @@ public class Locker {
     private void handleDispatcher(IncomingEvent event) {
         if (event instanceof SetUpLockerEvent setup) {
             handle(setup);
+            handledEvents.add(setup);
         } else if (event instanceof RentLockerEvent rent) {
             handle(rent);
+            handledEvents.add(rent);
         } else if (event instanceof ReleaseLockerEvent release) {
             handle(release);
+            handledEvents.add(release);
         } else {
             throw new LockerDispatchedNotImplementedEventException(this.lockerId.value(), event.toString());
         }

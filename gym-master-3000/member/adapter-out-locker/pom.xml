@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>acmecorp.gymmaster3000</groupId>
+        <artifactId>member</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <groupId>acmecorp.gymmaster3000.member</groupId>
+    <artifactId>adapter-out-locker</artifactId>
+    <version>${revision}</version>
+    <name>Member's Locker Adapter (OUT)</name>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>acmecorp.gymmaster3000.locker</groupId>
+            <artifactId>adapter-in-member</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>acmecorp.gymmaster3000.member</groupId>
+            <artifactId>application</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+</project>
